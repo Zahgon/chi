@@ -6,7 +6,6 @@ import (
 	"github.com/go-chi/chi/v5/_examples/versions/data"
 )
 
-// Article presented in API version 1.
 type Article struct {
 	*data.Article
 
@@ -14,9 +13,8 @@ type Article struct {
 }
 
 func (a *Article) Render(w http.ResponseWriter, r *http.Request) error {
+	_ = "STUB: not implemented"
 	return nil
 }
 
-func NewArticleResponse(article *data.Article) *Article {
-	return &Article{Article: article}
-}
+func NewArticleResponse(article *data.Article) *Article { _ = "STUB: not implemented"; return nil }

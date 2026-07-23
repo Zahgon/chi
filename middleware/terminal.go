@@ -1,16 +1,11 @@
 package middleware
 
-// Ported from Goji's middleware, source:
-// https://github.com/zenazn/goji/tree/master/web/middleware
-
 import (
-	"fmt"
 	"io"
 	"os"
 )
 
 var (
-	// Normal colors
 	nBlack   = []byte{'\033', '[', '3', '0', 'm'}
 	nRed     = []byte{'\033', '[', '3', '1', 'm'}
 	nGreen   = []byte{'\033', '[', '3', '2', 'm'}
@@ -19,7 +14,7 @@ var (
 	nMagenta = []byte{'\033', '[', '3', '5', 'm'}
 	nCyan    = []byte{'\033', '[', '3', '6', 'm'}
 	nWhite   = []byte{'\033', '[', '3', '7', 'm'}
-	// Bright colors
+
 	bBlack   = []byte{'\033', '[', '3', '0', ';', '1', 'm'}
 	bRed     = []byte{'\033', '[', '3', '1', ';', '1', 'm'}
 	bGreen   = []byte{'\033', '[', '3', '2', ';', '1', 'm'}
@@ -35,15 +30,7 @@ var (
 var IsTTY bool
 
 func init() {
-	// This is sort of cheating: if stdout is a character device, we assume
-	// that means it's a TTY. Unfortunately, there are many non-TTY
-	// character devices, but fortunately stdout is rarely set to any of
-	// them.
-	//
-	// We could solve this properly by pulling in a dependency on
-	// code.google.com/p/go.crypto/ssh/terminal, for instance, but as a
-	// heuristic for whether to print in color or in black-and-white, I'd
-	// really rather not.
+
 	fi, err := os.Stdout.Stat()
 	if err == nil {
 		m := os.ModeDevice | os.ModeCharDevice
@@ -51,13 +38,7 @@ func init() {
 	}
 }
 
-// colorWrite
 func cW(w io.Writer, useColor bool, color []byte, s string, args ...interface{}) {
-	if IsTTY && useColor {
-		w.Write(color)
-	}
-	fmt.Fprintf(w, s, args...)
-	if IsTTY && useColor {
-		w.Write(reset)
-	}
+	_ = "STUB: not implemented"
+	return
 }

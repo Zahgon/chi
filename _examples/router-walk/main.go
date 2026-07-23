@@ -36,7 +36,4 @@ func main() {
 	}
 }
 
-// Ping returns pong
-func Ping(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("pong"))
-}
+func Ping(w http.ResponseWriter, r *http.Request) { _ = "STUB: not implemented"; return }
