@@ -1,10 +1,3 @@
-// This example demonstrates the use of Timeout, and Throttle middlewares.
-//
-// Timeout: cancel a request if processing takes longer than 2.5 seconds,
-// server will respond with a http.StatusGatewayTimeout.
-//
-// Throttle: limit the number of in-flight requests along a particular
-// routing path and backlog the others.
 package main
 
 import (
@@ -37,15 +30,13 @@ func main() {
 		panic("test")
 	})
 
-	// Slow handlers/operations.
 	r.Group(func(r chi.Router) {
-		// Stop processing after 2.5 seconds.
+
 		r.Use(middleware.Timeout(2500 * time.Millisecond))
 
 		r.Get("/slow", func(w http.ResponseWriter, r *http.Request) {
 			rand.Seed(time.Now().Unix())
 
-			// Processing will take 1-5 seconds.
 			processTime := time.Duration(rand.Intn(4)+1) * time.Second
 
 			select {
@@ -53,19 +44,17 @@ func main() {
 				return
 
 			case <-time.After(processTime):
-				// The above channel simulates some hard work.
+
 			}
 
 			w.Write([]byte(fmt.Sprintf("Processed in %v seconds\n", processTime)))
 		})
 	})
 
-	// Throttle very expensive handlers/operations.
 	r.Group(func(r chi.Router) {
-		// Stop processing after 30 seconds.
+
 		r.Use(middleware.Timeout(30 * time.Second))
 
-		// Only one request will be processed at a time.
 		r.Use(middleware.Throttle(1))
 
 		r.Get("/throttled", func(w http.ResponseWriter, r *http.Request) {
@@ -81,7 +70,7 @@ func main() {
 				return
 
 			case <-time.After(5 * time.Second):
-				// The above channel simulates some hard work.
+
 			}
 
 			w.Write([]byte("Processed\n"))
